@@ -1,0 +1,548 @@
+  * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            padding-top: 80px; /* Space for fixed navigation */
+        }
+        
+        /* Fixed Navigation */
+        .fixed-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d4625c;
+        }
+        
+        .nav-links a {
+            margin: 0 15px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #d4625c;
+            text-decoration: none;
+        }
+        
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #d4625c 0%, #f4a6a0 100%);
+            color: #36454F;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+            background-size: 50px 50px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .couple-names {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #36454F;
+        }
+        
+        .wedding-date {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Event Details */
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid #d4625c;
+        }
+        
+        .event-icon {
+            font-size: 2rem;
+            color: #d4625c;
+            margin-bottom: 20px;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .event-info {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* RSVP Form */
+        .rsvp-form {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 5px 10px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #d4625c;
+            box-shadow: 0 0 0 0.2rem rgba(212, 98, 92, 0.25);
+        }
+        
+        .btn-rsvp {
+            background: linear-gradient(135deg, #d4625c 0%, #f4a6a0 100%);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn-rsvp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 98, 92, 0.4);
+            color: white;
+        }
+
+         .btn-cancel {
+            background: #6c757d;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+            color: white;
+        }
+        
+        /* Additional Info */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .info-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-item i {
+            font-size: 2.5rem;
+            color: #d4625c;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 50px;
+            color: #333;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #d4625c;
+            border-radius: 2px;
+        }
+        
+        /* Success Alert */
+        .alert-success {
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        /* Countdown Timer Styles */
+        .countdown-container {
+            margin: 40px 0;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            min-width: 80px;
+            border: 2px solid rgba(49, 48, 48, 0.3);
+            transition: transform 0.3s;
+           
+        }
+        
+        .countdown-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #36454F;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #36454F(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        /* Calendar Buttons */
+        .calendar-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-calendar {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-google {
+            background: #6082B6;
+            color: white;
+        }
+        
+        .btn-google:hover {
+            background: #4285f4;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4);
+        }
+        
+        .btn-outlook {
+            background: #4682B4;
+            color: white;
+        }
+        
+        .btn-outlook:hover {
+            background: #0078d7;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 120, 215, 0.4);
+        }
+        
+        .btn-ics {
+            background:#708090;
+            color: white;
+        }
+        
+        .btn-ics:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+                min-height: auto;
+            }
+            
+            .event-card, .rsvp-form {
+                padding: 25px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+              /* Map Section Styles */
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .map-info h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .map-embed {
+            margin: 30px 0;
+        }
+
+         /* Mobile responsiveness for countdown */
+        @media (max-width: 576px) {
+            .countdown-item {
+                min-width: 70px;
+                padding: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .calendar-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-calendar {
+                width: 80%;
+                max-width: 280px;
+            }
+        }
+
+     
+}
+
+   /*Phone clickable Hover*/
+
+        a[href^="tel:"] {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a[href^="tel:"]:hover {
+            text-decoration: underline;
+            color: #ee0020;
+        }
+
+       
+/* CSS for Ucapan Slider */
+.wishes-slider {
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.wish-slide {
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.wish-slide.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.wish-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wish-header {
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.wish-title {
+  color: white;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.wish-content {
+  padding: 30px 20px;
+  text-align: center;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wish-message {
+  color: #333;
+  margin: 0 0 15px 0;
+  font-size: 1.1em;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.wish-name {
+  color: #666;
+  margin: 0;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+/* Slider dots */
+.slider-dots {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active,
+.dot:hover {
+  background-color: #667eea;
+}
+
+/* Slider counter */
+.slider-counter {
+  text-align: center;
+  margin-top: 10px;
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wishes-slider {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  
+  .wish-content {
+    padding: 20px 15px;
+    min-height: 100px;
+  }
+  
+  .wish-message {
+    font-size: 1em;
+  }
+}
