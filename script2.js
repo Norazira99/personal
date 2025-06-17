@@ -1,4 +1,23 @@
-// RSVP Form Submission     
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+window.addEventListener('load', function() {
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+        homeSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    } else {
+        window.scrollTo(0, 0);
+    }
+});
+
+
+
+
+// RSVP Form Submission
 document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -14,11 +33,11 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         // Show and animate the success alert
         successAlert.style.display = 'block';
         successAlert.classList.add('show');
-
+        
         // Reset form
         this.reset();
-
-        // Refresh ucapan section after short delay
+        
+        // Update wishes section in background without refresh
         setTimeout(() => {
             fetch(scriptURL)
               .then(res => res.json())
@@ -26,25 +45,35 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
                   wishesData = data;
                   createSlider(); // recreate the updated slider
                   goToSlide(wishesData.length - 1); // scroll to last wish
+              })
+              .catch(error => {
+                  console.log('Error updating wishes:', error);
               });
         }, 1500); // wait for Google Sheet to receive data
-
-        // Scroll to Ucapan section
-        document.getElementById('wishes').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        // Auto-hide success alert
+        
+        // Auto-hide success alert after 3 seconds and scroll to home
         setTimeout(() => {
+            // Hide the success alert
             successAlert.classList.remove('show');
             setTimeout(() => {
                 successAlert.style.display = 'none';
             }, 150); // Wait for fade out animation
-        }, 5000);
-
+            
+            // Scroll to home section
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+                homeSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }, 2000); // 2 seconds delay
+        
     }).catch(() => {
         // Show error alert (form stays visible)
         failedAlert.style.display = 'block';
         failedAlert.classList.add('show');
-
+        
         setTimeout(() => {
             failedAlert.classList.remove('show');
             setTimeout(() => {
@@ -52,7 +81,7 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             }, 150);
         }, 3000);
     });
-
+    
     // Optional: log the submitted data
     console.log('RSVP Data:', Object.fromEntries(formData));
 });
