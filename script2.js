@@ -1,37 +1,50 @@
- // RSVP Form Submission     
+// RSVP Form Submission     
 document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const formData = new FormData(this);
-    
+    const successAlert = document.getElementById('successAlert');
+    const failedAlert = document.getElementById('failedAlert');
+
     fetch(this.action, {
         method: 'POST',
         body: formData,
         mode: 'no-cors'
     }).then(() => {
-       
         // Show and animate the success alert
-        const successAlert = document.getElementById('successAlert');
         successAlert.style.display = 'block';
         successAlert.classList.add('show');
-        
+
         // Reset form
         this.reset();
-        
-        // Auto-hide alert after 5 seconds and reset everything
+
+        // Refresh ucapan section after short delay
+        setTimeout(() => {
+            fetch(scriptURL)
+              .then(res => res.json())
+              .then(data => {
+                  wishesData = data;
+                  createSlider(); // recreate the updated slider
+                  goToSlide(wishesData.length - 1); // scroll to last wish
+              });
+        }, 1500); // wait for Google Sheet to receive data
+
+        // Scroll to Ucapan section
+        document.getElementById('wishes').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Auto-hide success alert
         setTimeout(() => {
             successAlert.classList.remove('show');
             setTimeout(() => {
                 successAlert.style.display = 'none';
             }, 150); // Wait for fade out animation
         }, 5000);
+
     }).catch(() => {
         // Show error alert (form stays visible)
-        const failedAlert = document.getElementById('failedAlert');
         failedAlert.style.display = 'block';
         failedAlert.classList.add('show');
-        
-        // Auto-hide error alert after 3 seconds
+
         setTimeout(() => {
             failedAlert.classList.remove('show');
             setTimeout(() => {
@@ -40,13 +53,9 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         }, 3000);
     });
 
-              // Scroll to success message
-            successAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Log data (replace with actual submission logic)
-            console.log('RSVP Data:', formData);
+    // Optional: log the submitted data
+    console.log('RSVP Data:', Object.fromEntries(formData));
 });
-
 
         
         
@@ -237,8 +246,8 @@ function createSlider() {
         `).join('')}
       </div>
       <div class="slider-dots">
-        ${wishesData.map((_, index) => `
-          <span class="dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></span>
+        ${Array.from({ length: 5 }).map((_, index) => `
+            <span class="dot ${index === 0 ? 'active' : ''}" onclick="goToGroup(${index})"></span>
         `).join('')}
       </div>
  
@@ -247,17 +256,34 @@ function createSlider() {
   document.getElementById('rsvp-list').innerHTML = html;
 }
 
+function goToGroup(dotIndex) {
+  const totalDots = 5;
+  const groupSize = Math.ceil(wishesData.length / totalDots);
+  const targetSlide = dotIndex * groupSize;
+
+  goToSlide(targetSlide);
+}
+
 function goToSlide(slideIndex) {
-  // Remove active class from current slide and dot
+  // Remove active class from current slide
   document.querySelector('.wish-slide.active').classList.remove('active');
-  document.querySelector('.dot.active').classList.remove('active');
-  
-  // Add active class to new slide and dot
+
+  // Add active class to new slide
   document.querySelectorAll('.wish-slide')[slideIndex].classList.add('active');
-  document.querySelectorAll('.dot')[slideIndex].classList.add('active');
-  
-  
+
   currentSlide = slideIndex;
+
+  // Update dots based on groups
+  const totalDots = 5;
+  const groupSize = Math.ceil(wishesData.length / totalDots);
+  const activeDotIndex = Math.floor(slideIndex / groupSize);
+
+  // Update dot active status
+  document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+  const dots = document.querySelectorAll('.dot');
+  if (dots[activeDotIndex]) {
+    dots[activeDotIndex].classList.add('active');
+  }
 }
 
 function nextSlide() {
