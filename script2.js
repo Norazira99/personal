@@ -226,7 +226,7 @@ function createSlider() {
           <div class="wish-slide ${index === 0 ? 'active' : ''}">
             <div class="wish-card">
               <div class="wish-header">
-                <h3 class="wish-title">wish me! :) </h3>
+                <h3 class="wish-title">wish us! :) </h3>
               </div>
               <div class="wish-content">
                 <p class="wish-message">${entry.wish}</p>
